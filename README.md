@@ -1,1 +1,2 @@
-hello, this is for pacman game
+hello, 
+This is for Pacman game
