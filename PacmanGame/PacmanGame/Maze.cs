@@ -89,6 +89,31 @@ namespace PacmanGame
             grid[4, 16] = 1;
             grid[5, 16] = 1;
             grid[6, 16] = 1;
+
+            //This creates a U shape of walls at the middle
+            grid[6, 6] = 1;
+            grid[7, 6] = 1;
+            grid[8, 6] = 1;
+            grid[9, 6] = 1;
+            grid[10, 6] = 1;
+            grid[11, 6] = 1;
+            grid[12, 6] = 1;
+            grid[13, 6] = 1;
+            grid[13, 7] = 1;
+            grid[13, 8] = 1;
+            grid[13, 9] = 1;
+            grid[13, 10] = 1;
+            grid[13, 11] = 1;
+            grid[13, 12] = 1;
+            grid[13, 13] = 1;
+            grid[6, 13] = 1;
+            grid[7, 13] = 1;
+            grid[8, 13] = 1;
+            grid[9, 13] = 1;
+            grid[10, 13] = 1;
+            grid[11, 13] = 1;
+            grid[12, 13] = 1;
+
         }
 
         public void Draw(Graphics g)

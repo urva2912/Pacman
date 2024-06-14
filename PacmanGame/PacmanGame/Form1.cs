@@ -28,12 +28,12 @@ namespace PacmanGame
             this.score = 0;
             this.lives = 3;
 
-            Image wallImage = Image.FromFile("C:\\MyOPfiles\\Programming2\\Assignments\\PacmanGame\\PacmanGame\\wall.jpg");
-            Image kibbleImage = Image.FromFile("C:\\MyOPfiles\\Programming2\\Assignments\\PacmanGame\\PacmanGame\\kibble.jpg");
-            Image pacmanImage = Image.FromFile("C:\\MyOPfiles\\Programming2\\Assignments\\PacmanGame\\PacmanGame\\pacman.gif");
-            Image ghoul1 = Image.FromFile("C:\\MyOPfiles\\Programming2\\Assignments\\PacmanGame\\PacmanGame\\ghoul1.png");
-            Image ghoul2 = Image.FromFile("C:\\MyOPfiles\\Programming2\\Assignments\\PacmanGame\\PacmanGame\\ghoul2.png");
-            Image ghoul3 = Image.FromFile("C:\\MyOPfiles\\Programming2\\Assignments\\PacmanGame\\PacmanGame\\ghoul3.jpg");
+            Image wallImage = Image.FromFile("C:\\Users\\chath\\OneDrive\\Documents\\GitHub\\Pacman\\PacmanGame\\PacmanGame\\Images\\wall.jpg");
+            Image kibbleImage = Image.FromFile("C:\\Users\\chath\\OneDrive\\Documents\\GitHub\\Pacman\\PacmanGame\\PacmanGame\\Images\\kibble.jpg");
+            Image pacmanImage = Image.FromFile("C:\\Users\\chath\\OneDrive\\Documents\\GitHub\\Pacman\\PacmanGame\\PacmanGame\\Images\\pacman.gif");
+            Image ghoul1 = Image.FromFile("C:\\Users\\chath\\OneDrive\\Documents\\GitHub\\Pacman\\PacmanGame\\PacmanGame\\Images\\ghoul1.png");
+            Image ghoul2 = Image.FromFile("C:\\Users\\chath\\OneDrive\\Documents\\GitHub\\Pacman\\PacmanGame\\PacmanGame\\Images\\ghoul2.png");
+            Image ghoul3 = Image.FromFile("C:\\Users\\chath\\OneDrive\\Documents\\GitHub\\Pacman\\PacmanGame\\PacmanGame\\Images\\ghoul3.jpg");
 
             pacman = new Pacman(1, 1, pacmanImage);
             ghouls = new List<Ghoul>
@@ -65,7 +65,7 @@ namespace PacmanGame
 
         private void DisplayScore(Graphics g)
         {
-            g.DrawString($"Score: {pacman.Score}", new Font("Arial", 16), Brushes.White, new PointF(10, 10));
+            g.DrawString($"Score: {pacman.Score}", new Font("Arial", 16), Brushes.White, new PointF(20, 20));
         }
 
         private void Form1_Load(object sender, EventArgs e)
