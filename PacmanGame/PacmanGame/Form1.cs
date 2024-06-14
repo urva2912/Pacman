@@ -28,12 +28,12 @@ namespace PacmanGame
             this.score = 0;
             this.lives = 3;
 
-            Image wallImage = Image.FromFile("C:\\Users\\chath\\OneDrive\\Documents\\GitHub\\Pacman\\PacmanGame\\PacmanGame\\Images\\wall.jpg");
-            Image kibbleImage = Image.FromFile("C:\\Users\\chath\\OneDrive\\Documents\\GitHub\\Pacman\\PacmanGame\\PacmanGame\\Images\\kibble.jpg");
-            Image pacmanImage = Image.FromFile("C:\\Users\\chath\\OneDrive\\Documents\\GitHub\\Pacman\\PacmanGame\\PacmanGame\\Images\\pacman.gif");
-            Image ghoul1 = Image.FromFile("C:\\Users\\chath\\OneDrive\\Documents\\GitHub\\Pacman\\PacmanGame\\PacmanGame\\Images\\ghoul1.png");
-            Image ghoul2 = Image.FromFile("C:\\Users\\chath\\OneDrive\\Documents\\GitHub\\Pacman\\PacmanGame\\PacmanGame\\Images\\ghoul2.png");
-            Image ghoul3 = Image.FromFile("C:\\Users\\chath\\OneDrive\\Documents\\GitHub\\Pacman\\PacmanGame\\PacmanGame\\Images\\ghoul3.jpg");
+            Image wallImage = Properties.Resources.wall;
+            Image kibbleImage = Properties.Resources.kibble;
+            Image pacmanImage = Properties.Resources.pacman;
+            Image ghoul1 = Properties.Resources.ghoul1;
+            Image ghoul2 = Properties.Resources.ghoul2;
+            Image ghoul3 = Properties.Resources.ghoul3;
 
             pacman = new Pacman(10, 9, pacmanImage);
             ghouls = new List<Ghoul>
