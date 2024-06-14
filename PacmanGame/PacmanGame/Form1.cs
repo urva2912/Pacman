@@ -35,7 +35,7 @@ namespace PacmanGame
             Image ghoul2 = Image.FromFile("C:\\Users\\chath\\OneDrive\\Documents\\GitHub\\Pacman\\PacmanGame\\PacmanGame\\Images\\ghoul2.png");
             Image ghoul3 = Image.FromFile("C:\\Users\\chath\\OneDrive\\Documents\\GitHub\\Pacman\\PacmanGame\\PacmanGame\\Images\\ghoul3.jpg");
 
-            pacman = new Pacman(1, 1, pacmanImage);
+            pacman = new Pacman(10, 9, pacmanImage);
             ghouls = new List<Ghoul>
             {
             new Ghoul(18, 18, ghoul1),

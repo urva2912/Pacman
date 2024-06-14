@@ -90,7 +90,7 @@ namespace PacmanGame
             grid[5, 16] = 1;
             grid[6, 16] = 1;
 
-            //This creates a U shape of walls at the middle
+            //This creates a U shaped wall at the middle
             grid[6, 6] = 1;
             grid[7, 6] = 1;
             grid[8, 6] = 1;
@@ -113,6 +113,13 @@ namespace PacmanGame
             grid[10, 13] = 1;
             grid[11, 13] = 1;
             grid[12, 13] = 1;
+
+            //This creates a C shaped wall at the middle
+            grid[10, 10] = 1;
+            grid[10, 9] = 1;
+            grid[9, 9] = 1;
+            grid[8, 9] = 1;
+            grid[8, 10] = 1;
 
         }
 
