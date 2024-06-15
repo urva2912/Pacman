@@ -141,6 +141,21 @@ namespace PacmanGame
             }
         }
 
+        public bool CheckWall(int x, int y)
+        {
+            return grid[y, x] == 1;
+        }
+
+        public bool CheckKibble(int x, int y)
+        {
+            return grid[y, x] == 0;
+        }
+
+        public void ConsumeKibble(int x, int y)
+        {
+            grid[y, x] = -1; // Kibble eaten
+        }
+
         public int Rows
         {
             get

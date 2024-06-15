@@ -9,7 +9,7 @@ namespace PacmanGame
 {
     public class Pacman : Creature
     {
-        public int Score { get; private set; }
+        public int score;
         public Image pacmanImage;
 
         public Pacman(int x, int y, Image pacmanImage)
@@ -20,7 +20,7 @@ namespace PacmanGame
 
         public void EatKibble()
         {
-            Score++;
+            score++;
         }
 
         public override void Move()
@@ -28,6 +28,17 @@ namespace PacmanGame
             // Pacman movement logic
         }
 
-        
+        public int Score
+        {
+            get
+            {
+                return score;
+            }
+
+            set
+            {
+                score = value;
+            }
+        }
     }
 }
