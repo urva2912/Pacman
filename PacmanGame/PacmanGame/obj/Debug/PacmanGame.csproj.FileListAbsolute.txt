@@ -1,0 +1,11 @@
+C:\MyOPfiles\Programming2\Assignments\PacmanGame\PacmanGame\bin\Debug\PacmanGame.exe.config
+C:\MyOPfiles\Programming2\Assignments\PacmanGame\PacmanGame\bin\Debug\PacmanGame.exe
+C:\MyOPfiles\Programming2\Assignments\PacmanGame\PacmanGame\bin\Debug\PacmanGame.pdb
+C:\MyOPfiles\Programming2\Assignments\PacmanGame\PacmanGame\obj\Debug\PacmanGame.csproj.AssemblyReference.cache
+C:\MyOPfiles\Programming2\Assignments\PacmanGame\PacmanGame\obj\Debug\PacmanGame.Form1.resources
+C:\MyOPfiles\Programming2\Assignments\PacmanGame\PacmanGame\obj\Debug\PacmanGame.Properties.Resources.resources
+C:\MyOPfiles\Programming2\Assignments\PacmanGame\PacmanGame\obj\Debug\PacmanGame.Resources.resources
+C:\MyOPfiles\Programming2\Assignments\PacmanGame\PacmanGame\obj\Debug\PacmanGame.csproj.GenerateResource.cache
+C:\MyOPfiles\Programming2\Assignments\PacmanGame\PacmanGame\obj\Debug\PacmanGame.csproj.CoreCompileInputs.cache
+C:\MyOPfiles\Programming2\Assignments\PacmanGame\PacmanGame\obj\Debug\PacmanGame.exe
+C:\MyOPfiles\Programming2\Assignments\PacmanGame\PacmanGame\obj\Debug\PacmanGame.pdb
