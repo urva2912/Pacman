@@ -12,7 +12,6 @@ namespace PacmanGame
 {
     public partial class Form1 : Form
     {
-        private Timer gameTimer;
         private Pacman pacman;
         private List<Ghoul> ghouls;
         private Maze maze;
@@ -36,6 +35,7 @@ namespace PacmanGame
             Image ghoul3 = Properties.Resources.ghoul3;
 
             pacman = new Pacman(10, 9, pacmanImage);
+
             ghouls = new List<Ghoul>
             {
             new Ghoul(18, 18, ghoul1),
@@ -43,11 +43,52 @@ namespace PacmanGame
             new Ghoul(18, 1, ghoul3)
             };
 
-            // Initialize the maze with 15 rows and 20 columns
+            // Initialize the maze with 20 rows and 20 columns.
             this.maze = new Maze(20, 20, wallImage, kibbleImage, CellSize);
 
             // Set the form's size based on the maze dimensions
             this.ClientSize = new Size(maze.Cols * CellSize, maze.Rows * CellSize + ExtraSpace);
+
+            gameTimer = new Timer();
+            gameTimer.Interval = 100; // Timer interval
+            gameTimer.Tick += gameTimer_Tick;
+            gameTimer.Start();
+        }
+
+        private void CollisionWithGhoul()
+        {
+            foreach (var ghoul in ghouls)
+            {
+                if (pacman.X == ghoul.X && pacman.Y == ghoul.Y)
+                {
+                    GameOver();
+                }
+            }
+        }
+
+        private void CollisionWithKibble()
+        {
+            if (maze.CheckKibble(pacman.X, pacman.Y))
+            {
+                pacman.EatKibble();
+                maze.ConsumeKibble(pacman.X, pacman.Y);
+            }
+        }
+
+        private bool AllKibblesConsumed()
+        {
+            // Check if all kibbles are consumed
+            for (int i = 0; i < 20; i++)
+            {
+                for (int j = 0; j < 20; j++)
+                {
+                    if (maze.CheckKibble(j, i))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -71,6 +112,28 @@ namespace PacmanGame
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void gameTimer_Tick(object sender, EventArgs e)
+        {
+            CollisionWithGhoul();
+            CollisionWithKibble();
+
+            if (AllKibblesConsumed())
+            {
+                GameWon();
+            }
+        }
+        private void GameOver()
+        {
+            gameTimer.Stop();
+            MessageBox.Show("Game Over!");
+        }
+
+        private void GameWon()
+        {
+            gameTimer.Stop();
+            MessageBox.Show("Congratulations, You Won!");
         }
     }
 }
