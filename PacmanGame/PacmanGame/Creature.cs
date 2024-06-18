@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace PacmanGame
 {
-    public abstract class Creature
+    public class Creature
     {
-        public int x;
-        public int y; 
-        public Image image;
+        public int X { get; set; }
+        public int Y { get; set; }
+        public Image Image { get; set; }
 
         public Creature(int x, int y, Image image)
         {
@@ -20,50 +15,14 @@ namespace PacmanGame
             Image = image;
         }
 
-        public abstract void Move();
+        public virtual void Move()
+        {
+            // Default move behavior (can be overridden by subclasses)
+        }
 
         public void Draw(Graphics g)
         {
-            g.DrawImage(Image, X * 20, Y * 20, 20, 20);
-        }
-
-        public int X
-        {
-            get
-            {
-                return x;
-            }
-
-            set
-            {
-                x = value;
-            }
-        }
-
-        public int Y
-        {
-            get
-            {
-                return y;
-            }
-
-            set
-            {
-                y = value;
-            }
-        }
-
-        public Image Image
-        {
-            get
-            {
-                return image;
-            }
-
-            set
-            {
-                image = value;
-            }
+            g.DrawImage(Image, X, Y);
         }
     }
 }
