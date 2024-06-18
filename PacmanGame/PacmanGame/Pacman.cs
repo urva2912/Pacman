@@ -1,21 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace PacmanGame
 {
+    public enum Direction
+    {
+        Up,
+        Down,
+        Left,
+        Right
+    }
+
     public class Pacman : Creature
     {
         public int score;
         public Image pacmanImage;
+        public Direction CurrentDirection { get; set; }
 
         public Pacman(int x, int y, Image pacmanImage)
             : base(x, y, pacmanImage)
         {
             this.pacmanImage = pacmanImage;
+            CurrentDirection = Direction.Right; // Initial direction
         }
 
         public void EatKibble()
@@ -25,7 +31,37 @@ namespace PacmanGame
 
         public override void Move()
         {
-            // Pacman movement logic
+            // Update Pacman's position based on the current direction
+            switch (CurrentDirection)
+            {
+                case Direction.Up:
+                    Y -= 1;
+                    break;
+                case Direction.Down:
+                    Y += 1;
+                    break;
+                case Direction.Left:
+                    X -= 1;
+                    break;
+                case Direction.Right:
+                    X += 1;
+                    break;
+            }
+
+            // Ensure Pacman stays within game boundaries (assuming game boundaries are defined)
+            StayWithinBoundaries();
+        }
+
+        private void StayWithinBoundaries()
+        {
+            // Assuming game boundary variables: gameWidth and gameHeight
+            int gameWidth = 800; // Example width
+            int gameHeight = 600; // Example height
+
+            if (X < 0) X = 0;
+            if (Y < 0) Y = 0;
+            if (X > gameWidth) X = gameWidth;
+            if (Y > gameHeight) Y = gameHeight;
         }
 
         public int Score
@@ -38,6 +74,26 @@ namespace PacmanGame
             set
             {
                 score = value;
+            }
+        }
+
+        public void HandleInput(Keys key)
+        {
+            // Update the direction based on user input
+            switch (key)
+            {
+                case Keys.Up:
+                    CurrentDirection = Direction.Up;
+                    break;
+                case Keys.Down:
+                    CurrentDirection = Direction.Down;
+                    break;
+                case Keys.Left:
+                    CurrentDirection = Direction.Left;
+                    break;
+                case Keys.Right:
+                    CurrentDirection = Direction.Right;
+                    break;
             }
         }
     }
