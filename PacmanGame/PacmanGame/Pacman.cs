@@ -15,13 +15,13 @@ namespace PacmanGame
     {
         public int score;
         public Image pacmanImage;
-        public Direction CurrentDirection { get; set; }
+        public Direction currentDirection;
 
         public Pacman(int x, int y, Image pacmanImage)
             : base(x, y, pacmanImage)
         {
             this.pacmanImage = pacmanImage;
-            CurrentDirection = Direction.Right; // Initial direction
+            currentDirection = Direction.Right; // Initial direction
         }
 
         public void EatKibble()
@@ -32,7 +32,7 @@ namespace PacmanGame
         public override void Move()
         {
             // Update Pacman's position based on the current direction
-            switch (CurrentDirection)
+            switch (currentDirection)
             {
                 case Direction.Up:
                     Y -= 1;
@@ -77,22 +77,35 @@ namespace PacmanGame
             }
         }
 
+        public Direction CurrentDirection
+        {
+            get
+            {
+                return currentDirection;
+            }
+
+            set
+            {
+                currentDirection = value;
+            }
+        }
+
         public void HandleInput(Keys key)
         {
             // Update the direction based on user input
             switch (key)
             {
                 case Keys.Up:
-                    CurrentDirection = Direction.Up;
+                    currentDirection = Direction.Up;
                     break;
                 case Keys.Down:
-                    CurrentDirection = Direction.Down;
+                    currentDirection = Direction.Down;
                     break;
                 case Keys.Left:
-                    CurrentDirection = Direction.Left;
+                    currentDirection = Direction.Left;
                     break;
                 case Keys.Right:
-                    CurrentDirection = Direction.Right;
+                    currentDirection = Direction.Right;
                     break;
             }
         }

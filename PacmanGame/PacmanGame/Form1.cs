@@ -14,10 +14,8 @@ namespace PacmanGame
         private const int CellSize = 20; // Size of each cell in the maze
         private const int ExtraSpace = 50; // Extra space at the bottom
 
-       
-
-        public Form1()
-        {
+       public Form1()
+       {
             InitializeComponent();
 
             // Load and resize images
@@ -45,14 +43,14 @@ namespace PacmanGame
 
             gameTimer = new Timer(); // Initialize the timer
             gameTimer.Interval = 100; // Timer interval
-            gameTimer.Tick += GameTimer_Tick;
+            gameTimer.Tick += gameTimer_Tick;
             gameTimer.Start();
 
             // Set up key event handlers
             this.KeyDown += Form1_KeyDown;
 
             this.DoubleBuffered = true;
-        }
+       }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -80,7 +78,7 @@ namespace PacmanGame
             }
         }
 
-        private void GameTimer_Tick(object sender, EventArgs e)
+        private void gameTimer_Tick(object sender, EventArgs e)
         {
             CollisionWithGhoul();
             CollisionWithKibble();
@@ -131,10 +129,7 @@ namespace PacmanGame
         {
             g.DrawString($"Score: {pacman.Score}", new Font("Arial", 16), Brushes.White, new PointF(20, maze.Rows * CellSize + 10));
         }
-        private void gameTimer_Tick(object sender, EventArgs e)
-        {
-            // Your code to handle the timer tick event
-        }
+        
         private void GameOver()
         {
             gameTimer.Stop();
