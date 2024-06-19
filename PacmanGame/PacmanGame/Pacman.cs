@@ -5,6 +5,7 @@ namespace PacmanGame
 {
     public enum Direction
     {
+        None,
         Up,
         Down,
         Left,
@@ -16,12 +17,14 @@ namespace PacmanGame
         public int score;
         public Image pacmanImage;
         public Direction currentDirection;
+        private Maze maze;
 
-        public Pacman(int x, int y, Image pacmanImage)
+        public Pacman(int x, int y, Image pacmanImage, Maze maze)
             : base(x, y, pacmanImage)
         {
             this.pacmanImage = pacmanImage;
-            currentDirection = Direction.Right; // Initial direction
+            currentDirection = Direction.None; // Initial direction
+            this.maze = maze;
         }
 
         public void EatKibble()
@@ -31,6 +34,8 @@ namespace PacmanGame
 
         public override void Move()
         {
+            //int newX = X;
+            //int newY = Y;
             // Update Pacman's position based on the current direction
             switch (currentDirection)
             {
@@ -48,6 +53,11 @@ namespace PacmanGame
                     break;
             }
 
+            //if (!maze.CheckWall(newX / maze.CellSize, newY / maze.CellSize))
+            //{
+              //  X = newX;
+              //  Y = newY;
+            //}
             // Ensure Pacman stays within game boundaries (assuming game boundaries are defined)
             StayWithinBoundaries();
         }
@@ -55,8 +65,8 @@ namespace PacmanGame
         private void StayWithinBoundaries()
         {
             // Assuming game boundary variables: gameWidth and gameHeight
-            int gameWidth = 800; // Example width
-            int gameHeight = 600; // Example height
+            int gameWidth = 400; // Example width
+            int gameHeight = 400; // Example height
 
             if (X < 0) X = 0;
             if (Y < 0) Y = 0;
