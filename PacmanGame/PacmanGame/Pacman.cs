@@ -15,19 +15,33 @@ namespace PacmanGame
 
     public class Pacman : Creature
     {
-        public int score;
-        public Image pacmanImage;
+        private int score;
+        private Image mouthOpen;
+        private Image mouthClose;
+        private bool isMouthOpen;
+        private Image pacmanUp;
+        private Image pacmanRight;
+        private Image pacmanLeft;
+        private Image pacmanDown;
         public Direction currentDirection;
         private Maze maze;
         private int moveSpeed;
 
-        public Pacman(int x, int y, Image pacmanImage, Maze maze)
-            : base(x, y, pacmanImage)
+        public Pacman(int x, int y, Image mouthOpen, Image mouthClose, Image pacmanUp, Image pacmanRight, Image pacmanLeft, Image pacmanDown, Maze maze)
+            : base(x, y, mouthOpen)
         {
-            this.pacmanImage = pacmanImage;
+            this.mouthOpen = mouthOpen;
+            this.mouthClose = mouthClose;
+            this.isMouthOpen = true;
             currentDirection = Direction.None; // Initial direction
             this.maze = maze;
             this.moveSpeed = 5; // Set the initial move speed
+
+            // Assign Pacman images for different directions
+            PacmanUp = pacmanUp;
+            PacmanDown = pacmanDown;
+            PacmanLeft = pacmanLeft;
+            PacmanRight = pacmanRight;
         }
 
         public void EatKibble()
@@ -151,6 +165,75 @@ namespace PacmanGame
             set
             {
                 moveSpeed = value;
+            }
+        }
+
+        public void Animate()
+        {
+            isMouthOpen = !isMouthOpen;
+
+            switch (currentDirection)
+            {
+                case Direction.Up:
+                    Image = isMouthOpen ? PacmanUp : mouthClose;
+                    break;
+                case Direction.Down:
+                    Image = isMouthOpen ? PacmanDown : mouthClose;
+                    break;
+                case Direction.Left:
+                    Image = isMouthOpen ? PacmanLeft : mouthClose;
+                    break;
+                case Direction.Right:
+                    Image = isMouthOpen ? PacmanRight : mouthClose;
+                    break;
+            }
+        }
+
+        public Image PacmanUp
+        {
+            get
+            {
+                return pacmanUp;
+            }
+            set
+            {
+                pacmanUp = value;
+            }
+        }
+
+        public Image PacmanRight
+        {
+            get
+            {
+                return pacmanRight;
+            }
+            set
+            {
+                pacmanRight = value;
+            }
+        }
+
+        public Image PacmanLeft
+        {
+            get
+            {
+                return pacmanLeft;
+            }
+            set
+            {
+                pacmanLeft = value;
+            }
+        }
+
+        public Image PacmanDown
+        {
+            get
+            {
+                return pacmanDown;
+            }
+            set
+            {
+                pacmanDown = value;
             }
         }
     }

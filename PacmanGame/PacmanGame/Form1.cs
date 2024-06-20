@@ -21,7 +21,12 @@ namespace PacmanGame
             // Load and resize images
             Image wallImage = ResizeImage(Properties.Resources.wall, CellSize, CellSize);
             Image kibbleImage = ResizeImage(Properties.Resources.kibble, CellSize, CellSize);
-            Image pacmanImage = ResizeImage(Properties.Resources.pacman, CellSize, CellSize);
+            Image pacmanOpen = ResizeImage(Properties.Resources.mouthOpen, CellSize, CellSize);
+            Image pacmanClose = ResizeImage(Properties.Resources.mouthClose, CellSize, CellSize);
+            Image pacmanUp = ResizeImage(Properties.Resources.pacmanUp, CellSize, CellSize);
+            Image pacmanRight = ResizeImage(Properties.Resources.pacmanRight, CellSize, CellSize);
+            Image pacmanLeft = ResizeImage(Properties.Resources.pacmanLeft, CellSize, CellSize);
+            Image pacmanDown = ResizeImage(Properties.Resources.pacmanDown, CellSize, CellSize);
             Image ghoul1 = ResizeImage(Properties.Resources.ghoul1, CellSize, CellSize);
             Image ghoul2 = ResizeImage(Properties.Resources.ghoul2, CellSize, CellSize);
             Image ghoul3 = ResizeImage(Properties.Resources.ghoul3, CellSize, CellSize);
@@ -29,7 +34,7 @@ namespace PacmanGame
             // Initialize the maze with 20 rows and 20 columns.
             maze = new Maze(20, 20, wallImage, kibbleImage, CellSize);
 
-            pacman = new Pacman(10 * CellSize, 9 * CellSize, pacmanImage, maze);
+            pacman = new Pacman(10 * CellSize, 9 * CellSize, pacmanOpen, pacmanClose, pacmanUp, pacmanRight, pacmanLeft, pacmanDown, maze);
 
             ghouls = new List<Ghoul>
             {
@@ -91,28 +96,15 @@ namespace PacmanGame
                 maze.ConsumeKibble(pacman.X / CellSize, pacman.Y / CellSize);
             }
         }
-        private void collisonWithWall()
-        {
-
-        }
-
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             // Check collisions
             CollisionWithGhoul();
             CollisionWithKibble();
-           
 
-            // Move Pacman
-            pacman.Move();
-
-            // Move each Ghoul
-            foreach (var ghoul in ghouls)
-            {
-                ghoul.Move();
-            }
-
+            pacman.Animate();
+            
             // Check win condition
             if (AllKibblesConsumed())
             {
