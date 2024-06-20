@@ -37,37 +37,33 @@ namespace PacmanGame
 
         public override void Move()
         {
+            int newX = X;
+            int newY = Y;
+
             // Update Pacman's position based on the current direction
             switch (currentDirection)
             {
                 case Direction.Up:
-                    Y -= moveSpeed;
+                    newY -= moveSpeed;
                     break;
                 case Direction.Down:
-                    Y += moveSpeed;
+                    newY += moveSpeed;
                     break;
                 case Direction.Left:
-                    X -= moveSpeed;
+                    newX -= moveSpeed;
                     break;
                 case Direction.Right:
-                    X += moveSpeed;
+                    newX += moveSpeed;
                     break;
             }
 
-            // Ensure Pacman stays within game boundaries
-            StayWithinBoundaries();
-        }
+            // Check if the new position collides with a wall
+            if (!maze.CheckWall(newX / Form1.CellSize, newY / Form1.CellSize))
+            {
+                X = newX;
+                Y = newY;
+            }
 
-        private void StayWithinBoundaries()
-        {
-            // Assuming game boundary variables: gameWidth and gameHeight
-            int gameWidth = 400; // Example width
-            int gameHeight = 400; // Example height
-
-            if (X < 0) X = 0;
-            if (Y < 0) Y = 0;
-            if (X > gameWidth) X = gameWidth;
-            if (Y > gameHeight) Y = gameHeight;
         }
 
         public int Score

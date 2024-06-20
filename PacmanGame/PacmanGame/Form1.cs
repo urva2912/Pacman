@@ -11,7 +11,7 @@ namespace PacmanGame
         private List<Ghoul> ghouls;
         private Maze maze;
 
-        private const int CellSize = 20; // Size of each cell in the maze
+        public static int CellSize { get; } = 20; // Size of each cell in the maze
         private const int ExtraSpace = 50; // Extra space at the bottom
 
        public Form1()
@@ -26,6 +26,9 @@ namespace PacmanGame
             Image ghoul2 = ResizeImage(Properties.Resources.ghoul2, CellSize, CellSize);
             Image ghoul3 = ResizeImage(Properties.Resources.ghoul3, CellSize, CellSize);
 
+            // Initialize the maze with 20 rows and 20 columns.
+            maze = new Maze(20, 20, wallImage, kibbleImage, CellSize);
+
             pacman = new Pacman(10 * CellSize, 9 * CellSize, pacmanImage, maze);
 
             ghouls = new List<Ghoul>
@@ -34,9 +37,6 @@ namespace PacmanGame
                 new Ghoul(1 * CellSize, 18 * CellSize, ghoul2),
                 new Ghoul(18 * CellSize, 1 * CellSize, ghoul3)
             };
-
-            // Initialize the maze with 20 rows and 20 columns.
-            maze = new Maze(20, 20, wallImage, kibbleImage, CellSize);
 
             // Set the form's size based on the maze dimensions
             this.ClientSize = new Size(maze.Cols * CellSize, maze.Rows * CellSize + ExtraSpace);
