@@ -60,16 +60,23 @@ namespace PacmanGame
             pacman.HandleInput(e.KeyCode);
         }
 
+
         private void CollisionWithGhoul()
         {
+            Rectangle pacmanBounds = new Rectangle(pacman.X, pacman.Y, pacman.Image.Width, pacman.Image.Height);
+
             foreach (var ghoul in ghouls)
             {
-                if (pacman.X == ghoul.X && pacman.Y == ghoul.Y)
+                Rectangle ghoulBounds = new Rectangle(ghoul.X, ghoul.Y, ghoul.Image.Width, ghoul.Image.Height);
+
+                if (pacmanBounds.IntersectsWith(ghoulBounds))
                 {
                     GameOver();
+                    return; // Exit early since game over
                 }
             }
         }
+
 
         private void CollisionWithKibble()
         {
@@ -79,21 +86,52 @@ namespace PacmanGame
                 maze.ConsumeKibble(pacman.X / CellSize, pacman.Y / CellSize);
             }
         }
+        private void collisonWithWall()
+        {
+
+        }
+
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
+            // Check collisions
             CollisionWithGhoul();
             CollisionWithKibble();
+           
 
-            pacman.Move(); // Move Pacman in the current direction
+            // Move Pacman
+            pacman.Move();
 
+            // Move each Ghoul
+            foreach (var ghoul in ghouls)
+            {
+                ghoul.Move();
+            }
+
+            // Check win condition
             if (AllKibblesConsumed())
             {
                 GameWon();
             }
 
             Invalidate(); // Redraw the form
+                          // Update game logic here
+
+            // Move Pacman
+            pacman.Move();
+
+            // Move each Ghoul
+            foreach (var ghoul in ghouls)
+            {
+                ghoul.MoveTowardsPacman(pacman);
+                ghoul.MoveRandomly();  // Or ghoul.MoveTowardsPacman(pacman);
+            }
+
+            // Check collisions, win conditions, etc.
+
+            Invalidate(); // Redraw the form
         }
+
 
         private bool AllKibblesConsumed()
         {
