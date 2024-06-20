@@ -14,10 +14,8 @@ namespace PacmanGame
         private const int CellSize = 20; // Size of each cell in the maze
         private const int ExtraSpace = 50; // Extra space at the bottom
 
-       
-
-        public Form1()
-        {
+       public Form1()
+       {
             InitializeComponent();
 
             // Load and resize images
@@ -28,7 +26,7 @@ namespace PacmanGame
             Image ghoul2 = ResizeImage(Properties.Resources.ghoul2, CellSize, CellSize);
             Image ghoul3 = ResizeImage(Properties.Resources.ghoul3, CellSize, CellSize);
 
-            pacman = new Pacman(10 * CellSize, 9 * CellSize, pacmanImage);
+            pacman = new Pacman(10 * CellSize, 9 * CellSize, pacmanImage, maze);
 
             ghouls = new List<Ghoul>
             {
@@ -43,16 +41,23 @@ namespace PacmanGame
             // Set the form's size based on the maze dimensions
             this.ClientSize = new Size(maze.Cols * CellSize, maze.Rows * CellSize + ExtraSpace);
 
+            // Remove kibbles from specific positions
+            maze.RemoveKibble(10, 9);
+            maze.RemoveKibble(18, 18);
+            maze.RemoveKibble(1, 18);
+            maze.RemoveKibble(18, 1);
+            maze.RemoveKibble(1, 1);
+
             gameTimer = new Timer(); // Initialize the timer
             gameTimer.Interval = 100; // Timer interval
-            gameTimer.Tick += GameTimer_Tick;
+            gameTimer.Tick += gameTimer_Tick;
             gameTimer.Start();
 
             // Set up key event handlers
             this.KeyDown += Form1_KeyDown;
 
             this.DoubleBuffered = true;
-        }
+       }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -92,7 +97,7 @@ namespace PacmanGame
         }
 
 
-        private void GameTimer_Tick(object sender, EventArgs e)
+        private void gameTimer_Tick(object sender, EventArgs e)
         {
             // Check collisions
             CollisionWithGhoul();
@@ -167,12 +172,9 @@ namespace PacmanGame
 
         private void DisplayScore(Graphics g)
         {
-            g.DrawString($"Score: {pacman.Score}", new Font("Arial", 16), Brushes.White, new PointF(20, maze.Rows * CellSize + 10));
+            g.DrawString($"Score: {pacman.Score}", new Font("Arial", 16), Brushes.Black, new PointF(20, maze.Rows * CellSize + 10));
         }
-        private void gameTimer_Tick(object sender, EventArgs e)
-        {
-            // Your code to handle the timer tick event
-        }
+        
         private void GameOver()
         {
             gameTimer.Stop();
