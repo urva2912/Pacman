@@ -143,17 +143,30 @@ namespace PacmanGame
 
         public bool CheckWall(int x, int y)
         {
+            // Check if the position is out of bounds
+            if (x < 0 || y < 0 || x >= columns || y >= rows)
+            {
+                return true; // Treat out of bounds as a wall
+            }
             return grid[y, x] == 1;
         }
 
         public bool CheckKibble(int x, int y)
         {
+            // Check if the position is out of bounds
+            if (x < 0 || y < 0 || x >= columns || y >= rows)
+            {
+                return false; // Treat out of bounds as no kibble
+            }
             return grid[y, x] == 0;
         }
 
         public void ConsumeKibble(int x, int y)
         {
-            grid[y, x] = -1; // Kibble eaten
+            if (x >= 0 && y >= 0 && x < columns && y < rows && grid[y, x] == 0)
+            {
+                grid[y, x] = -1; // Kibble eaten
+            }
         }
 
         public void RemoveKibble(int x, int y)

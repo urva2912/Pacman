@@ -58,10 +58,17 @@ namespace PacmanGame
             }
 
             // Check if the new position collides with a wall
-            if (!maze.CheckWall(newX / Form1.CellSize, newY / Form1.CellSize))
+            if (!maze.CheckWall(newX / maze.CellSize, newY / maze.CellSize))
             {
                 X = newX;
                 Y = newY;
+
+                // Check for kibble at the new position and consume it
+                if (maze.CheckKibble(newX / maze.CellSize, newY / maze.CellSize))
+                {
+                    maze.ConsumeKibble(newX / maze.CellSize, newY / maze.CellSize);
+                    EatKibble();
+                }
             }
 
         }
@@ -94,6 +101,9 @@ namespace PacmanGame
 
         public void HandleInput(Keys key)
         {
+            int newX = X;
+            int newY = Y;
+
             // Update the direction based on user input
             switch (key)
             {
@@ -109,6 +119,26 @@ namespace PacmanGame
                 case Keys.Right:
                     currentDirection = Direction.Right;
                     break;
+            }
+
+            if (!maze.CheckWall(newX / maze.CellSize, newY / maze.CellSize))
+            {
+                // Update the direction based on user input
+                switch (key)
+                {
+                    case Keys.Up:
+                        currentDirection = Direction.Up;
+                        break;
+                    case Keys.Down:
+                        currentDirection = Direction.Down;
+                        break;
+                    case Keys.Left:
+                        currentDirection = Direction.Left;
+                        break;
+                    case Keys.Right:
+                        currentDirection = Direction.Right;
+                        break;
+                }
             }
         }
 
