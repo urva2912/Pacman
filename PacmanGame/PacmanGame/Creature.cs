@@ -4,9 +4,9 @@ namespace PacmanGame
 {
     public class Creature
     {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public Image Image { get; set; }
+        public int x;
+        public int y;
+        public Image image;
 
         public Creature(int x, int y, Image image)
         {
@@ -23,6 +23,45 @@ namespace PacmanGame
         public void Draw(Graphics g)
         {
             g.DrawImage(Image, X, Y);
+        }
+
+        public int X
+        {
+            get
+            {
+                return x;
+            }
+
+            set
+            {
+                x = value;
+            }
+        }
+
+        public int Y
+        {
+            get
+            {
+                return y;
+            }
+
+            set
+            {
+                y = value;
+            }
+        }
+
+        public Image Image
+        {
+            get
+            {
+                return image;
+            }
+
+            set
+            {
+                image = value;
+            }
         }
     }
 }

@@ -156,6 +156,15 @@ namespace PacmanGame
             grid[y, x] = -1; // Kibble eaten
         }
 
+        public void RemoveKibble(int x, int y)
+        {
+            if (grid[y, x] == 0)
+            {
+                grid[y, x] = -1; // Kibble removed
+            }
+        }
+
+
         public int Rows
         {
             get
@@ -179,6 +188,19 @@ namespace PacmanGame
             set
             {
                 columns = value;
+            }
+        }
+
+        public int CellSize
+        {
+            get
+            {
+                return cellSize;
+            }
+
+            set
+            {
+                cellSize = value;
             }
         }
     }
