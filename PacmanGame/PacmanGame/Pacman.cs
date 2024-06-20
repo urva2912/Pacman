@@ -18,6 +18,7 @@ namespace PacmanGame
         public Image pacmanImage;
         public Direction currentDirection;
         private Maze maze;
+        private int moveSpeed;
 
         public Pacman(int x, int y, Image pacmanImage, Maze maze)
             : base(x, y, pacmanImage)
@@ -25,6 +26,7 @@ namespace PacmanGame
             this.pacmanImage = pacmanImage;
             currentDirection = Direction.None; // Initial direction
             this.maze = maze;
+            this.moveSpeed = 5; // Set the initial move speed
         }
 
         public void EatKibble()
@@ -34,31 +36,24 @@ namespace PacmanGame
 
         public override void Move()
         {
-            //int newX = X;
-            //int newY = Y;
             // Update Pacman's position based on the current direction
             switch (currentDirection)
             {
                 case Direction.Up:
-                    Y -= 1;
+                    Y -= moveSpeed;
                     break;
                 case Direction.Down:
-                    Y += 1;
+                    Y += moveSpeed;
                     break;
                 case Direction.Left:
-                    X -= 1;
+                    X -= moveSpeed;
                     break;
                 case Direction.Right:
-                    X += 1;
+                    X += moveSpeed;
                     break;
             }
 
-            //if (!maze.CheckWall(newX / maze.CellSize, newY / maze.CellSize))
-            //{
-              //  X = newX;
-              //  Y = newY;
-            //}
-            // Ensure Pacman stays within game boundaries (assuming game boundaries are defined)
+            // Ensure Pacman stays within game boundaries
             StayWithinBoundaries();
         }
 
@@ -117,6 +112,18 @@ namespace PacmanGame
                 case Keys.Right:
                     currentDirection = Direction.Right;
                     break;
+            }
+        }
+
+        public int MoveSpeed
+        {
+            get
+            {
+                return moveSpeed;
+            }
+            set
+            {
+                moveSpeed = value;
             }
         }
     }
