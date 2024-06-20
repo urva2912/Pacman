@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿// TO create creature class
+using System.Drawing;
 
 namespace PacmanGame
 {
