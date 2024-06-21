@@ -1,4 +1,10 @@
-﻿using System;
+﻿//
+// Maze Class
+// ==========
+// To manage the layout and drawing of the maze.
+//
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,13 +16,14 @@ namespace PacmanGame
 {
     public class Maze
     {
-        private int[,] grid;
-        private int rows;
-        private int columns;
-        private Image wallImage;
-        private Image kibbleImage;
-        private int cellSize;
+        private int[,] grid;// This will be used to create a grid.
+        private int rows;// This will represent rows of the maze.
+        private int columns;// This will represent the columns of the maze.
+        private Image wallImage;// This is used to represent image for wall.
+        private Image kibbleImage;// This is used to represent image for kibble.
+        private int cellSize;// This is the size of a cell in the maze.
 
+        // This is the constructor used to initialise all the fields.
         public Maze(int rows, int columns, Image wallImage, Image kibbleImage, int cellSize)
         {
             this.rows = rows;
@@ -28,6 +35,11 @@ namespace PacmanGame
             InitializeMaze();
         }
 
+        //
+        // InitializeMaze()
+        // ================
+        // It will set up the maze with walls and kibbles.
+        //
         private void InitializeMaze()
         {
              // Initialize maze with walls and kibbles
@@ -123,6 +135,11 @@ namespace PacmanGame
 
         }
 
+        //
+        // Draw()
+        // ======
+        // It will draw the maze on the form.
+        //
         public void Draw(Graphics g)
         {
             for (int i = 0; i < rows; i++)
@@ -141,6 +158,11 @@ namespace PacmanGame
             }
         }
 
+        //
+        // CheckWall()
+        // ===========
+        // It will check if the cell is a wall.
+        //
         public bool CheckWall(int x, int y)
         {
             // Check if the position is out of bounds
@@ -151,6 +173,11 @@ namespace PacmanGame
             return grid[y, x] == 1;
         }
 
+        //
+        // CheckKibble()
+        // =============
+        // It will check if the cell is a kibble.
+        //
         public bool CheckKibble(int x, int y)
         {
             // Check if the position is out of bounds
@@ -161,6 +188,11 @@ namespace PacmanGame
             return grid[y, x] == 0;
         }
 
+        //
+        // ConsumeKibble()
+        // ===============
+        // It will mark a kibble when it’s consumed by Pacman.
+        //
         public void ConsumeKibble(int x, int y)
         {
             if (x >= 0 && y >= 0 && x < columns && y < rows && grid[y, x] == 0)
@@ -169,6 +201,11 @@ namespace PacmanGame
             }
         }
 
+        //
+        // RemoveKibble()
+        // ==============
+        // It will remove a kibble from a relative position.
+        //
         public void RemoveKibble(int x, int y)
         {
             if (grid[y, x] == 0)
@@ -177,7 +214,11 @@ namespace PacmanGame
             }
         }
 
-
+        //
+        // Get and Set the rows of the maze
+        // ================================
+        // This will allow the form to get and set the rows of the maze.
+        //
         public int Rows
         {
             get
@@ -191,6 +232,11 @@ namespace PacmanGame
             }
         }
 
+        //
+        // Get and Set the columns of the maze
+        // ===================================
+        // This will allow the form to get and set the columns of the maze.
+        //
         public int Cols
         {
             get
@@ -204,6 +250,11 @@ namespace PacmanGame
             }
         }
 
+        //
+        // Get and Set the size of a cell in the maze
+        // ============================================
+        // This will allow the form to get and set the size of a cell in the maze.
+        //
         public int CellSize
         {
             get
