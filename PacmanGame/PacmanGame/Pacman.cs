@@ -33,6 +33,8 @@ namespace PacmanGame
         public Direction currentDirection;// This is used to define the direction of movement of pacman.
         private Maze maze;// Creating an instance for Maze class.
         private int moveSpeed;// This is the speed which pacman will move.
+        private int width;// This will set the width of the mouthOpen image.
+        private int height;// This will set the height of the mouthOpen image.
 
         //This is the constructor used to initialise all the fields.
         public Pacman(int x, int y, Image mouthOpen, Image mouthClose, Image pacmanUp, Image pacmanRight, Image pacmanLeft, Image pacmanDown, Maze maze)
@@ -50,6 +52,10 @@ namespace PacmanGame
             PacmanDown = pacmanDown;
             PacmanLeft = pacmanLeft;
             PacmanRight = pacmanRight;
+
+            // Set the width and height based on the size of the images
+            this.width = mouthOpen.Width;
+            this.height = mouthOpen.Height;
         }
 
         //
@@ -90,7 +96,10 @@ namespace PacmanGame
             }
 
             // Check if the new position collides with a wall
-            if (!maze.CheckWall(newX / maze.CellSize, newY / maze.CellSize))
+            if (!maze.CheckWall(newX / maze.CellSize, newY / maze.CellSize) &&
+                !maze.CheckWall((newX + width - 1) / maze.CellSize, newY / maze.CellSize) &&
+                !maze.CheckWall(newX / maze.CellSize, (newY + height - 1) / maze.CellSize) &&
+                !maze.CheckWall((newX + width - 1) / maze.CellSize, (newY + height - 1) / maze.CellSize))
             {
                 X = newX;
                 Y = newY;
@@ -148,45 +157,37 @@ namespace PacmanGame
         //
         public void HandleInput(Keys key)
         {
-            int newX = X;
-            int newY = Y;
-
             // Update the direction based on user input
             switch (key)
             {
                 case Keys.Up:
-                    currentDirection = Direction.Up;
+                    if (!maze.CheckWall(X / maze.CellSize, (Y - moveSpeed) / maze.CellSize) &&
+                        !maze.CheckWall((X + width - 1) / maze.CellSize, (Y - moveSpeed) / maze.CellSize))
+                    {
+                        currentDirection = Direction.Up;
+                    }
                     break;
                 case Keys.Down:
-                    currentDirection = Direction.Down;
+                    if (!maze.CheckWall(X / maze.CellSize, (Y + height + moveSpeed - 1) / maze.CellSize) &&
+                        !maze.CheckWall((X + width - 1) / maze.CellSize, (Y + height + moveSpeed - 1) / maze.CellSize))
+                    {
+                        currentDirection = Direction.Down;
+                    }
                     break;
                 case Keys.Left:
-                    currentDirection = Direction.Left;
+                    if (!maze.CheckWall((X - moveSpeed) / maze.CellSize, Y / maze.CellSize) &&
+                        !maze.CheckWall((X - moveSpeed) / maze.CellSize, (Y + height - 1) / maze.CellSize))
+                    {
+                        currentDirection = Direction.Left;
+                    }
                     break;
                 case Keys.Right:
-                    currentDirection = Direction.Right;
-                    break;
-            }
-
-            // Ensure whether it's a wall.
-            if (!maze.CheckWall(newX / maze.CellSize, newY / maze.CellSize))
-            {
-                // If not a wall, update the direction.
-                switch (key)
-                {
-                    case Keys.Up:
-                        currentDirection = Direction.Up;
-                        break;
-                    case Keys.Down:
-                        currentDirection = Direction.Down;
-                        break;
-                    case Keys.Left:
-                        currentDirection = Direction.Left;
-                        break;
-                    case Keys.Right:
+                    if (!maze.CheckWall((X + width + moveSpeed - 1) / maze.CellSize, Y / maze.CellSize) &&
+                        !maze.CheckWall((X + width + moveSpeed - 1) / maze.CellSize, (Y + height - 1) / maze.CellSize))
+                    {
                         currentDirection = Direction.Right;
-                        break;
-                }
+                    }
+                    break;
             }
         }
 
