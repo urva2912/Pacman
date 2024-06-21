@@ -42,7 +42,7 @@ namespace PacmanGame
         //
         private void InitializeMaze()
         {
-             // Initialize maze with walls and kibbles
+            // Initialize maze with walls and kibbles
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
@@ -58,51 +58,51 @@ namespace PacmanGame
                 }
             }
 
-            //This creates a column of walls at the right side bottom
-            grid[16, 16] = 1; 
+            // This creates a column of walls at the right side bottom
+            grid[16, 16] = 1;
             grid[15, 16] = 1;
             grid[14, 16] = 1;
             grid[13, 16] = 1;
 
-            //This creates a row of walls at the right side bottom
+            // This creates a row of walls at the right side bottom
             grid[16, 15] = 1;
             grid[16, 14] = 1;
             grid[16, 13] = 1;
 
-            //This creates a row of walls at the left side bottom
+            // This creates a row of walls at the left side bottom
             grid[16, 3] = 1;
             grid[16, 4] = 1;
             grid[16, 5] = 1;
             grid[16, 6] = 1;
 
-            //This creates a column of walls at the left side bottom
+            // This creates a column of walls at the left side bottom
             grid[15, 3] = 1;
             grid[14, 3] = 1;
             grid[13, 3] = 1;
 
-            //This creates a column of walls at the left side top
+            // This creates a column of walls at the left side top
             grid[3, 3] = 1;
             grid[4, 3] = 1;
             grid[5, 3] = 1;
             grid[6, 3] = 1;
 
-            //This creates a row of walls at the left side top
+            // This creates a row of walls at the left side top
             grid[3, 4] = 1;
             grid[3, 5] = 1;
             grid[3, 6] = 1;
 
-            //This creates a row of walls at the right side top
+            // This creates a row of walls at the right side top
             grid[3, 13] = 1;
             grid[3, 14] = 1;
             grid[3, 15] = 1;
             grid[3, 16] = 1;
 
-            //This creates a column of walls at the left side top
+            // This creates a column of walls at the left side top
             grid[4, 16] = 1;
             grid[5, 16] = 1;
             grid[6, 16] = 1;
 
-            //This creates a U shaped wall at the middle
+            // This creates a U shaped wall at the middle
             grid[6, 6] = 1;
             grid[7, 6] = 1;
             grid[8, 6] = 1;
@@ -126,7 +126,7 @@ namespace PacmanGame
             grid[11, 13] = 1;
             grid[12, 13] = 1;
 
-            //This creates a C shaped wall at the middle
+            // This creates a C shaped wall at the middle
             grid[10, 10] = 1;
             grid[10, 9] = 1;
             grid[9, 9] = 1;
@@ -165,12 +165,14 @@ namespace PacmanGame
         //
         public bool CheckWall(int x, int y)
         {
+
             // Check if the position is out of bounds
             if (x < 0 || y < 0 || x >= columns || y >= rows)
             {
                 return true; // Treat out of bounds as a wall
             }
             return grid[y, x] == 1;
+            return grid[y, x] == 0;
         }
 
         //
@@ -268,6 +270,4 @@ namespace PacmanGame
             }
         }
     }
-
-
 }
