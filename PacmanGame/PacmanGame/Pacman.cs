@@ -45,7 +45,7 @@ namespace PacmanGame
             this.isMouthOpen = true;
             currentDirection = Direction.None; // Initial direction
             this.maze = maze;
-            this.moveSpeed = 5; // Set the initial move speed
+            this.moveSpeed = 7; // Set the initial move speed
 
             // Assign Pacman images for different directions
             PacmanUp = pacmanUp;
