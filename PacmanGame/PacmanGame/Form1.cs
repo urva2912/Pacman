@@ -52,9 +52,9 @@ namespace PacmanGame
             // Initialize the ghouls
             ghouls = new List<Ghoul>
             {
-                new Ghoul(18 * CellSize, 18 * CellSize, ghoul1),
-                new Ghoul(1 * CellSize, 18 * CellSize, ghoul2),
-                new Ghoul(18 * CellSize, 1 * CellSize, ghoul3)
+                new Ghoul(18 * CellSize, 18 * CellSize, ghoul1, maze),
+                new Ghoul(1 * CellSize, 18 * CellSize, ghoul2, maze),
+                new Ghoul(18 * CellSize, 1 * CellSize, ghoul3, maze)
             };
 
             // Set the form's size based on the maze dimensions
