@@ -226,8 +226,8 @@ namespace PacmanGame
         }
 
         //
-        // GameOver()
-        // ==========
+        // GameWon()
+        // =========
         // It will handle the game won scenario.
         //
         private void GameWon()
