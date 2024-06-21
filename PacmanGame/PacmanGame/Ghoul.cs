@@ -8,13 +8,17 @@ namespace PacmanGame
         private Random random;  // Random object for random movement
         private float floatX;   // Floating point X coordinate
         private float floatY;   // Floating point Y coordinate
+        private Maze maze;      // Reference to the maze for collision detection
+        private int cellSize;   // Size of a cell in the maze
 
         // Constructor to initialize the ghoul's position and image
-        public Ghoul(int x, int y, Image image) : base(x, y, image)
+        public Ghoul(int x, int y, Image image, Maze maze) : base(x, y, image)
         {
             random = new Random();  // Initialize random number generator
             floatX = x;
             floatY = y;
+            this.maze = maze;       // Assign the maze reference
+            this.cellSize = maze.CellSize;
         }
 
         // Method to move towards Pacman
@@ -22,33 +26,27 @@ namespace PacmanGame
         {
             float deltaX = pacman.X - floatX;
             float deltaY = pacman.Y - floatY;
+            float distance = (float)Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
             float stepSize = 2.5f; // Smaller step size for smoother movement
 
-            // Adjust Ghoul's position based on direction towards Pacman
-            if (Math.Abs(deltaX) > Math.Abs(deltaY))
+            if (distance > 0)
             {
-                if (deltaX > 0 && floatX + stepSize < 800 - Image.Width) // Check right boundary
-                    floatX += stepSize; // Move right
-                else if (deltaX < 0 && floatX - stepSize > 0) // Check left boundary
-                    floatX -= stepSize; // Move left
-            }
-            else
-            {
-                if (deltaY > 0 && floatY + stepSize < 600 - Image.Height) // Check bottom boundary
-                    floatY += stepSize; // Move down
-                else if (deltaY < 0 && floatY - stepSize > 0) // Check top boundary
-                    floatY -= stepSize; // Move up
-            }
+                // Normalize the direction vector
+                float normalizedDeltaX = (deltaX / distance) * stepSize;
+                float normalizedDeltaY = (deltaY / distance) * stepSize;
 
-            // Update the integer positions for rendering and collision detection
-            int newX = (int)Math.Round(floatX);
-            int newY = (int)Math.Round(floatY);
+                // Calculate potential new positions
+                float newFloatX = floatX + normalizedDeltaX;
+                float newFloatY = floatY + normalizedDeltaY;
 
-            // Ensure Ghoul stays within the maze boundaries
-            if (newX >= 0 && newX + Image.Width <= 800 && newY >= 0 && newY + Image.Height <= 600)
-            {
-                X = newX;
-                Y = newY;
+                // Check collision with walls before updating position
+                if (!IsWall(newFloatX, newFloatY))
+                {
+                    floatX = newFloatX;
+                    floatY = newFloatY;
+                    X = (int)Math.Round(floatX);
+                    Y = (int)Math.Round(floatY);
+                }
             }
         }
 
@@ -58,38 +56,45 @@ namespace PacmanGame
             int direction = random.Next(4);  // 0: up, 1: down, 2: left, 3: right
             float stepSize = 2.5f; // Smaller step size for smoother movement
 
+            // Calculate potential new positions
+            float newFloatX = floatX;
+            float newFloatY = floatY;
+
             switch (direction)
             {
                 case 0:  // Up
-                    if (floatY - stepSize > 0) // Check top boundary
-                        floatY -= stepSize;
+                    newFloatY -= stepSize;
                     break;
                 case 1:  // Down
-                    if (floatY + stepSize < 600 - Image.Height) // Check bottom boundary
-                        floatY += stepSize;
+                    newFloatY += stepSize;
                     break;
                 case 2:  // Left
-                    if (floatX - stepSize > 0) // Check left boundary
-                        floatX -= stepSize;
+                    newFloatX -= stepSize;
                     break;
                 case 3:  // Right
-                    if (floatX + stepSize < 800 - Image.Width) // Check right boundary
-                        floatX += stepSize;
+                    newFloatX += stepSize;
                     break;
                 default:
                     break;
             }
 
-            // Update the integer positions for rendering and collision detection
-            int newX = (int)Math.Round(floatX);
-            int newY = (int)Math.Round(floatY);
-
-            // Ensure Ghoul stays within the maze boundaries
-            if (newX >= 0 && newX + Image.Width <= 800 && newY >= 0 && newY + Image.Height <= 600)
+            // Check collision with walls before updating position
+            if (!IsWall(newFloatX, newFloatY))
             {
-                X = newX;
-                Y = newY;
+                floatX = newFloatX;
+                floatY = newFloatY;
+                X = (int)Math.Round(floatX);
+                Y = (int)Math.Round(floatY);
             }
+        }
+
+        // Method to check if the new position collides with a wall
+        private bool IsWall(float x, float y)
+        {
+            int cellX = (int)Math.Floor(x / cellSize);
+            int cellY = (int)Math.Floor(y / cellSize);
+
+            return maze.CheckWall(cellX, cellY);
         }
     }
 }
