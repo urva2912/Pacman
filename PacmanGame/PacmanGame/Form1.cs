@@ -26,8 +26,8 @@ namespace PacmanGame
         private const int CellSize = 20; // Size of each cell in the maze.
         private const int ExtraSpace = 50; // Extra space at the bottom of the form.
 
-       public Form1()
-       {
+        public Form1()
+        {
             InitializeComponent();
 
             // Load and resize the images
@@ -39,9 +39,11 @@ namespace PacmanGame
             Image pacmanRight = ResizeImage(Properties.Resources.pacmanRight, CellSize, CellSize);
             Image pacmanLeft = ResizeImage(Properties.Resources.pacmanLeft, CellSize, CellSize);
             Image pacmanDown = ResizeImage(Properties.Resources.pacmanDown, CellSize, CellSize);
-            Image ghoul1 = ResizeImage(Properties.Resources.ghoul1, CellSize, CellSize);
-            Image ghoul2 = ResizeImage(Properties.Resources.ghoul2, CellSize, CellSize);
-            Image ghoul3 = ResizeImage(Properties.Resources.ghoul3, CellSize, CellSize);
+
+            // Resize ghoul images to smaller size
+            Image ghoul1 = ResizeImage(Properties.Resources.ghoul1, CellSize - 5, CellSize - 5);
+            Image ghoul2 = ResizeImage(Properties.Resources.ghoul2, CellSize - 5, CellSize - 5);
+            Image ghoul3 = ResizeImage(Properties.Resources.ghoul3, CellSize - 5, CellSize - 5);
 
             // Initialize the maze with 20 rows and 20 columns.
             maze = new Maze(20, 20, wallImage, kibbleImage, CellSize);
@@ -76,7 +78,7 @@ namespace PacmanGame
             this.KeyDown += Form1_KeyDown;
 
             this.DoubleBuffered = true;// This will avoid flickering of the images.
-       }
+        }
 
         //
         // Form1_KeyDown()
@@ -136,7 +138,7 @@ namespace PacmanGame
             CollisionWithKibble();
 
             pacman.MouthAnimate();
-            
+
             // Check win condition
             if (AllKibblesConsumed())
             {
@@ -144,7 +146,7 @@ namespace PacmanGame
             }
 
             Invalidate(); // Redraw the form
-                          
+
             // Move  the Pacman
             pacman.Move();
 
@@ -153,7 +155,7 @@ namespace PacmanGame
             {
                 ghoul.MoveTowardsPacman(pacman);
                 ghoul.MoveRandomly();  // This is a method used to move the ghouls randomly.
-            }   
+            }
         }
 
         //
@@ -241,6 +243,11 @@ namespace PacmanGame
         // =============
         // It will resize the images using graphics.
         //
+        //
+        // ResizeImage()
+        // =============
+        // It will resize the images using graphics.
+        //
         private Image ResizeImage(Image image, int width, int height)
         {
             var destRect = new Rectangle(0, 0, width, height);
@@ -265,5 +272,6 @@ namespace PacmanGame
 
             return destImage;
         }
+
     }
 }
