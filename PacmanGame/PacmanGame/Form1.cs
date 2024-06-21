@@ -1,4 +1,16 @@
-﻿using System;
+﻿/* Program name: 	    Assignment 2 - Pacman game
+   Project file name:   PacmanGame.sln
+   Author:		        Chathuni Wahalathantri & Urvashi Pansuriya
+   Date:	            14/06/2024
+   Language:		    C#
+   Platform:		    Microsoft Visual Studio 2022
+   Purpose:		        To create a Pacman game which is smooth, fast and responsive where players can control Pacman to eat kibbles 
+                        in a maze without running into ghouls.   
+   Description:		    We will start by making walls, Pacman, a maze, and ghouls to set up the game. Set Pacman movement, ghoul movement, 
+                        and collision detection. Tracking the score and display on the screen.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -7,36 +19,43 @@ namespace PacmanGame
 {
     public partial class Form1 : Form
     {
-        private Pacman pacman;
-        private List<Ghoul> ghouls;
-        private Maze maze;
+        private Pacman pacman;// Creating an instance for the Pacman class.
+        private List<Ghoul> ghouls;// This will manage the ghouls within a list.
+        private Maze maze;// Creating an instance for the Maze class.
 
-        private const int CellSize = 20; // Size of each cell in the maze
-        private const int ExtraSpace = 50; // Extra space at the bottom
+        private const int CellSize = 20; // Size of each cell in the maze.
+        private const int ExtraSpace = 50; // Extra space at the bottom of the form.
 
        public Form1()
        {
             InitializeComponent();
 
-            // Load and resize images
+            // Load and resize the images
             Image wallImage = ResizeImage(Properties.Resources.wall, CellSize, CellSize);
             Image kibbleImage = ResizeImage(Properties.Resources.kibble, CellSize, CellSize);
-            Image pacmanImage = ResizeImage(Properties.Resources.pacman, CellSize, CellSize);
+            Image pacmanOpen = ResizeImage(Properties.Resources.mouthOpen, CellSize, CellSize);
+            Image pacmanClose = ResizeImage(Properties.Resources.mouthClose, CellSize, CellSize);
+            Image pacmanUp = ResizeImage(Properties.Resources.pacmanUp, CellSize, CellSize);
+            Image pacmanRight = ResizeImage(Properties.Resources.pacmanRight, CellSize, CellSize);
+            Image pacmanLeft = ResizeImage(Properties.Resources.pacmanLeft, CellSize, CellSize);
+            Image pacmanDown = ResizeImage(Properties.Resources.pacmanDown, CellSize, CellSize);
             Image ghoul1 = ResizeImage(Properties.Resources.ghoul1, CellSize, CellSize);
             Image ghoul2 = ResizeImage(Properties.Resources.ghoul2, CellSize, CellSize);
             Image ghoul3 = ResizeImage(Properties.Resources.ghoul3, CellSize, CellSize);
 
-            pacman = new Pacman(10 * CellSize, 9 * CellSize, pacmanImage, maze);
+            // Initialize the maze with 20 rows and 20 columns.
+            maze = new Maze(20, 20, wallImage, kibbleImage, CellSize);
 
+            // Initialize the pacman
+            pacman = new Pacman(10 * CellSize, 9 * CellSize, pacmanOpen, pacmanClose, pacmanUp, pacmanRight, pacmanLeft, pacmanDown, maze);
+
+            // Initialize the ghouls
             ghouls = new List<Ghoul>
             {
                 new Ghoul(18 * CellSize, 18 * CellSize, ghoul1),
                 new Ghoul(1 * CellSize, 18 * CellSize, ghoul2),
                 new Ghoul(18 * CellSize, 1 * CellSize, ghoul3)
             };
-
-            // Initialize the maze with 20 rows and 20 columns.
-            maze = new Maze(20, 20, wallImage, kibbleImage, CellSize);
 
             // Set the form's size based on the maze dimensions
             this.ClientSize = new Size(maze.Cols * CellSize, maze.Rows * CellSize + ExtraSpace);
@@ -51,21 +70,30 @@ namespace PacmanGame
             gameTimer = new Timer(); // Initialize the timer
             gameTimer.Interval = 100; // Timer interval
             gameTimer.Tick += gameTimer_Tick;
-            gameTimer.Start();
+            gameTimer.Start();// This will start the timer.
 
             // Set up key event handlers
             this.KeyDown += Form1_KeyDown;
 
-            this.DoubleBuffered = true;
+            this.DoubleBuffered = true;// This will avoid flickering of the images.
        }
 
+        //
+        // Form1_KeyDown()
+        // ===============
+        // It will move the Pacman using the arrow keys
+        //
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             // Handle input to change Pacman's direction
             pacman.HandleInput(e.KeyCode);
         }
 
-
+        //
+        // CollisionWithGhoul()
+        // ====================
+        // It will check the collision between Pacman and Ghoul.
+        //
         private void CollisionWithGhoul()
         {
             Rectangle pacmanBounds = new Rectangle(pacman.X, pacman.Y, pacman.Image.Width, pacman.Image.Height);
@@ -82,7 +110,11 @@ namespace PacmanGame
             }
         }
 
-
+        //
+        // CollisionWithKibble()
+        // =====================
+        // It will check the collision between Pacman and Kibble.
+        //
         private void CollisionWithKibble()
         {
             if (maze.CheckKibble(pacman.X / CellSize, pacman.Y / CellSize))
@@ -91,28 +123,20 @@ namespace PacmanGame
                 maze.ConsumeKibble(pacman.X / CellSize, pacman.Y / CellSize);
             }
         }
-        private void collisonWithWall()
-        {
 
-        }
-
-
+        //
+        // gameTimer_Tick()
+        // ================
+        // It will handle the timer tick event.
+        //
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             // Check collisions
             CollisionWithGhoul();
             CollisionWithKibble();
-           
 
-            // Move Pacman
-            pacman.Move();
-
-            // Move each Ghoul
-            foreach (var ghoul in ghouls)
-            {
-                ghoul.Move();
-            }
-
+            pacman.MouthAnimate();
+            
             // Check win condition
             if (AllKibblesConsumed())
             {
@@ -120,24 +144,23 @@ namespace PacmanGame
             }
 
             Invalidate(); // Redraw the form
-                          // Update game logic here
-
-            // Move Pacman
+                          
+            // Move  the Pacman
             pacman.Move();
 
             // Move each Ghoul
             foreach (var ghoul in ghouls)
             {
                 ghoul.MoveTowardsPacman(pacman);
-                ghoul.MoveRandomly();  // Or ghoul.MoveTowardsPacman(pacman);
-            }
-
-            // Check collisions, win conditions, etc.
-
-            Invalidate(); // Redraw the form
+                ghoul.MoveRandomly();  // This is a method used to move the ghouls randomly.
+            }   
         }
 
-
+        //
+        // AllKibblesConsumed()
+        // ====================
+        // It will check if all the kibbles are consumed in the maze.
+        //
         private bool AllKibblesConsumed()
         {
             for (int i = 0; i < maze.Rows; i++)
@@ -153,6 +176,11 @@ namespace PacmanGame
             return true;
         }
 
+        //
+        // OnPaint()
+        // =========
+        // It will draw the game components on the form.
+        //
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -165,28 +193,54 @@ namespace PacmanGame
             }
             DisplayScore(g);
         }
+
+        //
+        // Form1_Load()
+        // ============
+        // It will handle the form load event.
+        //
         private void Form1_Load(object sender, EventArgs e)
         {
             // Your code to handle the form load event
         }
 
+        //
+        // DisplayScore()
+        // ==============
+        // It will draw the label for score using graphics.
+        //
         private void DisplayScore(Graphics g)
         {
             g.DrawString($"Score: {pacman.Score}", new Font("Arial", 16), Brushes.Black, new PointF(20, maze.Rows * CellSize + 10));
         }
-        
+
+        //
+        // GameOver()
+        // ==========
+        // It will handle the game over scenario.
+        //
         private void GameOver()
         {
             gameTimer.Stop();
             MessageBox.Show("Game Over!");
         }
 
+        //
+        // GameWon()
+        // =========
+        // It will handle the game won scenario.
+        //
         private void GameWon()
         {
             gameTimer.Stop();
             MessageBox.Show("Congratulations, You Won!");
         }
 
+        //
+        // ResizeImage()
+        // =============
+        // It will resize the images using graphics.
+        //
         private Image ResizeImage(Image image, int width, int height)
         {
             var destRect = new Rectangle(0, 0, width, height);
