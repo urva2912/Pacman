@@ -1,17 +1,29 @@
-﻿using System;
+﻿//
+// Ghoul Class
+// ===========
+// To manage the movement of the ghoul which represents an enemy character that is moving around the maze.
+//
+
+using System;
 using System.Drawing;
 
 namespace PacmanGame
 {
     public class Ghoul : Creature
     {
-        private Random random;
+        private Random random;// This is used to create a random object.
 
+        // This is the constructor used to initialise the field.
         public Ghoul(int x, int y, Image image) : base(x, y, image)
         {
             random = new Random();  // Initialize random number generator
         }
 
+        //
+        // MoveTowardsPacman()
+        // ===================
+        // It will adjust the direction to move towards pacman.
+        //
         public void MoveTowardsPacman(Pacman pacman)
         {
             int deltaX = pacman.X - this.X;
@@ -35,6 +47,11 @@ namespace PacmanGame
             }
         }
 
+        //
+        // MoveRandomly()
+        // ==============
+        // It will move the ghouls randomly in the maze.
+        //
         public void MoveRandomly()
         {
             int direction = random.Next(4);  // 0: up, 1: down, 2: left, 3: right

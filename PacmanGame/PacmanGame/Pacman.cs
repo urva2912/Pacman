@@ -1,9 +1,15 @@
-﻿//pacman class
+﻿//
+// Pacman Class
+// ============
+// To manage the Pacman movement, animation and scoring
+//
+
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace PacmanGame
 {
+    // This is an enumeration which consists a set of possible directions for the pacman.
     public enum Direction
     {
         None,
@@ -15,18 +21,20 @@ namespace PacmanGame
 
     public class Pacman : Creature
     {
-        private int score;
-        private Image mouthOpen;
-        private Image mouthClose;
-        private bool isMouthOpen;
-        private Image pacmanUp;
-        private Image pacmanRight;
-        private Image pacmanLeft;
-        private Image pacmanDown;
-        public Direction currentDirection;
-        private Maze maze;
-        private int moveSpeed;
+        //Fields used to define pacman.
+        private int score;// This will be used to increase the score when the pacman eats a kibble.
+        private Image mouthOpen;// This is used to represent the image for mouth open.
+        private Image mouthClose;// This is used to represent the image for mouth close.
+        private bool isMouthOpen;// This is to check whether the mouth of pacman is open.
+        private Image pacmanUp;// This is used to represent the image for pacman towards up.
+        private Image pacmanRight;// This is used to represent the image for pacman towards right.
+        private Image pacmanLeft;// This is used to represent the image for pacman towards left.
+        private Image pacmanDown;// This is used to represent the image for pacman towards down.
+        public Direction currentDirection;// This is used to define the direction of movement of pacman.
+        private Maze maze;// Creating an instance for Maze class.
+        private int moveSpeed;// This is the speed which pacman will move.
 
+        //This is the constructor used to initialise all the fields.
         public Pacman(int x, int y, Image mouthOpen, Image mouthClose, Image pacmanUp, Image pacmanRight, Image pacmanLeft, Image pacmanDown, Maze maze)
             : base(x, y, mouthOpen)
         {
@@ -44,11 +52,21 @@ namespace PacmanGame
             PacmanRight = pacmanRight;
         }
 
+        //
+        // EatKibble()
+        // ===========
+        // It will increase the Pacman’s score by 1 when it eats each kibble.
+        //
         public void EatKibble()
         {
             score++;
         }
 
+        //
+        // Move()
+        // ======
+        // It will override the move method for the Pacman.
+        //
         public override void Move()
         {
             int newX = X;
@@ -87,6 +105,11 @@ namespace PacmanGame
 
         }
 
+        //
+        // Get and Set the score for each kibble
+        // =====================================
+        // This will allow the form to get and set the score for each kibble.
+        //
         public int Score
         {
             get
@@ -100,6 +123,11 @@ namespace PacmanGame
             }
         }
 
+        //
+        // Get and Set the current direction of pacman
+        // ===========================================
+        // This will allow the form to get and set the current direction of pacman.
+        //
         public Direction CurrentDirection
         {
             get
@@ -113,6 +141,11 @@ namespace PacmanGame
             }
         }
 
+        //
+        // HandleInput()
+        // =============
+        // It will update the movement based on the user input.
+        //
         public void HandleInput(Keys key)
         {
             int newX = X;
@@ -135,9 +168,10 @@ namespace PacmanGame
                     break;
             }
 
+            // Ensure whether it's a wall.
             if (!maze.CheckWall(newX / maze.CellSize, newY / maze.CellSize))
             {
-                // Update the direction based on user input
+                // If not a wall, update the direction.
                 switch (key)
                 {
                     case Keys.Up:
@@ -156,6 +190,11 @@ namespace PacmanGame
             }
         }
 
+        //
+        // Get and Set the speed of pacman
+        // ===============================
+        // This will allow the form to get and set the speed of pacman.
+        //
         public int MoveSpeed
         {
             get
@@ -168,7 +207,12 @@ namespace PacmanGame
             }
         }
 
-        public void Animate()
+        //
+        // MouthAnimate()
+        // ==============
+        // It will set the Pacman’s mouth for animation.
+        //
+        public void MouthAnimate()
         {
             isMouthOpen = !isMouthOpen;
 
@@ -189,6 +233,11 @@ namespace PacmanGame
             }
         }
 
+        //
+        // Get and Set the image for pacman towards up
+        // ===========================================
+        // This will allow the form to get and set the image of pacman towards up.
+        //
         public Image PacmanUp
         {
             get
@@ -201,6 +250,11 @@ namespace PacmanGame
             }
         }
 
+        //
+        // Get and Set the image for pacman towards right
+        // ==============================================
+        // This will allow the form to get and set the image of pacman towards right.
+        //
         public Image PacmanRight
         {
             get
@@ -213,6 +267,11 @@ namespace PacmanGame
             }
         }
 
+        //
+        // Get and Set the image for pacman towards left
+        // =============================================
+        // This will allow the form to get and set the image of pacman towards left.
+        //
         public Image PacmanLeft
         {
             get
@@ -225,6 +284,11 @@ namespace PacmanGame
             }
         }
 
+        //
+        // Get and Set the image for pacman towards down
+        // =============================================
+        // This will allow the form to get and set the image of pacman towards down.
+        //
         public Image PacmanDown
         {
             get
